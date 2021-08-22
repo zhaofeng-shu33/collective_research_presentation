@@ -54,37 +54,108 @@ numberstyle=\tiny\color{mygray}
 \end{block}
 \end{frame}
 %\section*{Outline}
-% \begin{frame}
-% 	\tableofcontents
-% \end{frame}
-% \section{Background}
-% \subsection{Community Detection}
-% \begin{frame}{Community Detection}
-% 	\begin{columns}
-% 		\column{0.5\textwidth}
-% 		\begin{figure}
-% 			\includegraphics[width=0.8\textwidth]{cd.png}
-% 		\end{figure}
-% 	\column{0.5\textwidth}
-% 	Community Detection is inferring the group of vertices which are more
-% 	densely connected in a graph
-% 	\end{columns}
-% 	\begin{columns}
-% 		\column{0.33\textwidth}
-% 		\begin{figure}
-% 			\includegraphics[width=\textwidth]{benno2t.pdf}
-% 		\end{figure}
-% 		\column{0.05\textwidth}
-% 		$\Rightarrow$
-% 		\column{0.5\textwidth}
-% 		\begin{figure}
-% 		\includegraphics[width=\textwidth]{bennot.pdf}
-% 		\end{figure}
-% 	\end{columns}
-% \end{frame}
-
-
-% \subsection{Related Work}
+\begin{frame}
+	\tableofcontents
+	% the whole story goes
+	% as follows:
+	% first we need to remove outliers given a community
+	% then we need to detect the communities
+	% finally using side information we can improve
+	% the accuracy of the detection
+\end{frame}
+\section{Background}
+\subsection{Community Detection}
+\begin{frame}{Community Detection}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[width=0.8\textwidth]{cd.png}
+		\end{figure}
+	\column{0.5\textwidth}
+	Community Detection is inferring the group of vertices which are more
+	densely connected in a network
+	\end{columns}
+	\begin{columns}
+		\column{0.33\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{benno2t.pdf}
+		\end{figure}
+		\column{0.05\textwidth}
+		$\Rightarrow$
+		\column{0.5\textwidth}
+		\begin{figure}
+		\includegraphics[width=\textwidth]{bennot.pdf}
+		\end{figure}
+	\end{columns}
+\end{frame}
+\begin{frame}{Application Domain}
+	\begin{columns}[T] % contents are top vertically aligned
+		\column{.6\textwidth}
+		\begin{figure}
+		\includegraphics[height=4cm]{distributed_computing.jpg}
+		\caption*{Job allocation in distributed computing}
+		\end{figure}
+		\column{.4\textwidth}
+		\begin{figure}
+		\includegraphics[height=4cm]{recommendation_system.png}
+		\caption*{User clustering in recommendation system}
+		\end{figure}
+		\end{columns}
+\end{frame}
+\begin{frame}{Model and Algorithms}
+	% this slide focuses on the methods:
+	% how to achieve the goal
+	% of community detection
+	\begin{itemize}
+		\item Network: graph $G(V, E)$
+		\item Community: subset of $V$
+	\end{itemize}
+	\begin{columns}
+		\column{0.5\textwidth}
+		xx
+		\column{0.5\textwidth}
+		xx
+	\end{columns}
+\end{frame}
+\begin{frame}{Benchmark Problem and Evaluation Metric}
+		\begin{block}{Stochastic block model}
+		\begin{itemize}
+		\item a probabilistic model to generate random graph
+		\item larger probability for the existence of edges within the same community
+		\item smaller probability for the existence of edges between different communities
+		\end{itemize}
+		\end{block}
+		\begin{columns}
+			\column{0.33\textwidth}
+				\begin{figure}
+				\includegraphics[width=\textwidth]{sbm.png}
+			\end{figure}
+		\column{0.67\textwidth}
+		\quad$(G,Y)\sim \textrm{SSBM}(n, p, q)$
+		\begin{itemize}
+			\item $Y$: community labels
+			\item $n$: the number of nodes
+			\item $p$: probability of connecting within clusters
+			\item $q$: probability of connecting across clusters
+		\end{itemize}
+		\end{columns}	
+\end{frame}
+ \section[Info-Clustering]{Outlier Detection in Communities by Info-Clustering}
+\begin{frame}{Background}	
+	\begin{columns}
+		\column{5cm}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{community_outlier.png}
+			\caption{The Community Outlier}
+		\end{figure}
+		\column{5cm}
+		Outlier detection is the identification of abnormal data which differs from the majority of the data.
+	\end{columns}
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{mmi.png}
+\caption{Multivariate Mutual Information}
+\end{figure}
+\end{frame}
 % \begin{frame}
 % 	\frametitle{Related Work}
 % \begin{itemize}
@@ -109,283 +180,67 @@ numberstyle=\tiny\color{mygray}
 % \item Improved algorithm for principal sequence of partition
 % \end{itemize}
 % \end{frame}
-% \section{Formulation of Info-Detection}
+
 % \subsection{Info-Clustering}
-% \begin{frame}
-% \frametitle{Review of Info-Clustering}
-% \begin{enumerate}
-% \item directed graph $G(V, E)$; Node set $Z_V=\{Z_i | i \in V\}$
-% \item partition $\P=\{C_1, \dots, C_k\}, \bigcup_{i=1}^k C_i = V$ and $i\neq j \Rightarrow C_i \cap C_j = \emptyset$
-% \item $\Pi$ is the collection of all partitions of $V$, $\Pi' = \Pi \backslash \{V\}$
-% \item $f(\cdot)$ is the graph in-cut function, $f(C)=\sum_{i \neq C, j\in C, (i,j) \in E} w_{ij}$
-% \item $f[\cdot]$ is a function defined on $\Pi$ by $f[\P]=\sum_{C\in \P}f(C)$
-% \end{enumerate}
-% \begin{definition}[info-cluster]
-% Given $G(V, E)$, the cluster set $C_{\gamma}(Z_V)$ is defined as 
-% \begin{align}
-% I_{\mathcal{P}}(Z_V) & = \frac{f[\P]}{ \abs{\mathcal{P}} - 1}\\
-% I(Z_V) & = \min_{\mathcal{P} \in \Pi'(V)} I_{\mathcal{P}}(Z_V) \\
-% C_{\gamma}(Z_V) & := \textrm{maximal}\{ B \in V \vert \, \abs{B} > 1, I(Z_B) > \gamma \}
-% \end{align}
-% \end{definition}
-% \end{frame}
-% \begin{frame}{Review of Info-Clustering}
-% \begin{enumerate}
-% \item  every two sets $C(Z_V)=\bigcup_{\gamma \geq 0} C_{\gamma}(Z_V)$ are either disjoint or have subset relationship
-% \item sets from $C(Z_V)$ can be arranged in a clustering tree $\mathcal{T}$; The leaf node of $\mathcal{T}$ is $\{j\}$.
-% \item the largest threshold value $\gamma_N = \max_{A\subseteq V, \abs{A}>1} I(Z_A)$; The maximal set to achieve this is denoted $B$; $\gamma_N = I(Z_B)$.
-% \end{enumerate}
-% Example
-% \begin{columns}
-% \column{0.45\textwidth}
-% \begin{figure}
-% 		\includegraphics[width=4.5cm]{pic/example_directed.eps}
-% \end{figure}
-% \column{0.55\textwidth}
-% 	\begin{equation*}
-% 	C_{\gamma}(Z_V)	=\begin{cases}
-% 					\{\{1,2,3\}\} & \gamma < 2 \\
-% 					\{\{1,3\}\} & 2\leq \gamma < 5 \\
-% 					\emptyset & \gamma \geq \gamma_N = 5
-% 		\end{cases}
-% 	\end{equation*}
-% \end{columns}
-% \end{frame}
-% \subsection{Info-Detection}
-% \begin{frame}
-% 	\frametitle{Info-Detection Method}
-% \begin{itemize}
-% \item For $\gamma_N = I(Z_B)$, nodes in $B$ are inliers and nodes in $V\backslash B$ are outliers.
-% \item The ourlier score $Z_j$ for $j \in V\backslash B$ is measured with the depth of the set $\{j\}$ in the hierarchical tree.
-% \end{itemize}
-% Example
-% 	\begin{figure}
-% 		\centering
-% 		\includegraphics[width=9cm]{pic/outlier_example.eps}
-% 		\caption*{Info-Detection applied to 6 points on Cartesian plane, with $w_{ij} = \exp(-d_{ij}^2)$}\label{fig:ex}
-% 	\end{figure}
-% \end{frame}
-% \begin{frame}{Prediction Scheme for Info-Detection}
-% For newly added node $i'$. Let $V'=B\cup \{i'\}$, we can compute $\gamma'_N$ for $G(V', E(V'))$.
-% $ \gamma'_N > \gamma_N \iff i'$ is normal observation. We found that
-% \begin{proposition}
-% \begin{equation}
-% \gamma'_N > \gamma_N \iff  \sum_{i \in B} w_{ii'} > \gamma_N 
-% \end{equation}
-% \end{proposition}
-% \begin{figure}
-% 	\centering
-% 	\includegraphics[width=\textwidth]{pic/outlier_boundary_illustration.eps}
-% 	\caption*{Detection boundary lines}	\label{fig:boundary}
-% \end{figure}
-% \end{frame}
-
-% \subsection{Algorithms}
-% \frame{\tableofcontents[currentsection]}
-% \begin{frame}{Review of Principal Sequence of Partition}
-% It has been found the mathematical structure of info-clustering is the same with that of principal sequence of partition.
-% \begin{definition}[Principal Sequence of Partition]
-% \begin{align}
-% h_{\P}(\lambda) &=  f[\P] - \abs{\P} \lambda  \label{eq:hPL}\\
-% h(\lambda) &= \min_{\P \in \Pi'(V)} h_{\P}(\lambda) \label{eq:hLambda}
-% \end{align}
-% The optimal partitions $\P_1, \dots, \P_k$ for $h(\lambda)$ are nested such that $\P_1 \succeq \P_2 \dots \succeq \P_k$,  which are called principal sequence of partition (PSP) of the graph $G$.
-% \end{definition}
-% We call $\lambda^*$ a critical value for PSP if $\P_i, \P_{i+1}$ are both minimizer for $h(\lambda^*)$ in \eqref{eq:hLambda}.
-% The largest critical value is equal to $\gamma_N$ and the largest set in $\P_{k-1}$ is equal to $B$.
-% \end{frame}
-% \begin{frame}
-% \frametitle{Review of Narayanan's Algorithm to compute PSP}
-% \begin{columns}
-% \column{0.5\textwidth}
-% \algsetup{linenosize=\tiny}
-% \begin{algorithm}[H]
-% \caption*{Narayanan's Algorithm}\label{alg:psp}
-% {\tiny
-% \begin{algorithmic}[1]
-% \REQUIRE a directed graph $G(V,E)$
-% \ENSURE A sorted critical value array \textbf{L} and a reverse ordered array \textbf{PSP} containing $\P_1,\dots, \P_k$.
-% \STATE \textbf{L}  $\leftarrow$ empty list.
-% \STATE $Q\leftarrow \{V\}, P \leftarrow \{ \{i \} | i \in V\}$
-% \STATE $\mathbf{PSP}= [Q, P]$
-% \STATE \texttt{Split}$(Q,P)$
-% \STATE sort $L$ and sort $\mathbf{PSP}$ with respect to $\succeq$ 
-% \FUNCTION{\texttt{Split}$(Q,P)$}
-%  \STATE\label{alg:gamma} $\gamma' = {1 \over \abs{P} - \abs{Q}} (f(P)-f(Q))$
-%  \STATE $h' = {1 \over \abs{P} - \abs{Q}}(\abs{P} f(Q) - \abs{Q} f(P))$
-%  \STATE $(\tilde{h}, P') = \texttt{DT}(f,\gamma')$
-%  \IF{$\tilde{h} = h'$}
-%  	\STATE insert $\gamma'$ to $\mathbf{L}$
-%  \ELSE
-%  	\STATE insert $P'$ to $\mathbf{PSP}$
-%  	\STATE \texttt{Split}$(Q, P')$
-%  	\STATE \texttt{Split}$(P',P)$
-%  \ENDIF
-% \ENDFUNCTION
-% \end{algorithmic}
-% }
-% \end{algorithm}
-% The whole graph $G$ is used in each computation of \texttt{DT} routine.
-% \column{0.5\textwidth}
-% Example
-% \begin{figure}
-% \includegraphics[width=4.5cm]{pic/dt_with_graph.eps}
-% \end{figure}
-% \begin{align*}
-% \P_0  & = \{\{1,2,3\}\} \\
-% \P_1  & = \{\{1,3\},\{2\}\} \\
-% \P_2  & = \{\{1\},\{2\},\{3\}\} 
-% \end{align*}
-% \end{columns}
-% \end{frame}
-% \begin{frame}
-% \frametitle{Improved PSP Algorithm}
-% \begin{columns}
-% \column{0.5\textwidth}
-% \vskip -1.2em
-% \algsetup{linenosize=\tiny}
-% \begin{algorithm}[H]
-% \caption*{{\footnotesize Improved PSP Algorithm}}
-% {\tiny
-% 	\begin{algorithmic}[1]
-% 		\REQUIRE a directed graph $G(V, E)$
-% 		\ENSURE a hierarchical tree $\mathcal{T}(K, E)$ where $K \subseteq 2^{V}$ is node set and $E$ is edge set.
-% 		\STATE initialize tree $\mathcal{T}$ with $V$ as root node, $\{j\}(j\leq \abs{V})$ as leaf node and no stem node.
-% 		\STATE \texttt{Split}($G, V$)
-% 		\FUNCTION{\texttt{Split}($\widetilde{G}, \widetilde{V}$)}
-% 		\STATE $w$ is the summation of all edge weights of $\widetilde{G}$ 
-% 		\STATE $\gamma' = \frac{w}{\abs{V(\widetilde{G})}-1}$ where $V(\widetilde{G})$ is node set of graph $\widetilde{G}$ \label{alg:gamma_apostrophe}
-% 		\STATE $(\tilde{h}, P') = \texttt{DT}(\widetilde{G}, \gamma')$ 
-% 		\IF{$\tilde{h} = - \gamma'$}
-% 		\STATE add edge weight $\gamma'$ in $\mathcal{T}$ from $\widetilde{V}$ to its children
-% 		\ELSE
-% 		\FOR{$S$ in $P'$ and $\abs{S}>1$}
-% 		\STATE make children of $\widetilde{V}$ in $\mathcal{T}$ have new parent $S$		
-% 		\STATE make the parent of $S$ be $\widetilde{V}$
-% 		\STATE \texttt{Split}($\widetilde{G}[S], S$) where $\widetilde{G}[S]$ is the subgraph of $\widetilde{G}$ restricted on $S$
-% 		\STATE contract $S$ to a single node in $\widetilde{G}$ % graph \widetilde{G} is modified
-% 		\ENDFOR 
-% 		\STATE \texttt{Split}($\widetilde{G}, \widetilde{V}$)		
-% 		\ENDIF
-% 		\ENDFUNCTION
-% 	\end{algorithmic}
-% }
-% \end{algorithm}
-% \vskip -1.2em
-% Smaller graph $G$ is used in each computation of \texttt{DT} routine.
-% \column{0.5\textwidth}
-% Example
-% \begin{figure}
-% \includegraphics[width=5cm]{pic/alg_illustration.eps}
-% \end{figure}
-% Time complexity for dense graph
-% \begin{itemize}
-% \item Narayanan's: $O(n^5)$
-% \item Ours: $O(n^4)$
-% \end{itemize}
-% \end{columns}
-% \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Empirical Comparison for three implementation of PSP}
-% \begin{figure}
-% 	\centering
-% 	\begin{subfigure}{0.4\textwidth}
-% 		\includegraphics[width=\textwidth]{pic/gaussian-blob-dataset.eps}		
-% \vskip -1.0em
-
-%    \caption*{\quad\quad$\abs{V}=O(\abs{E}^2)$ (above) \\ \quad\quad$\abs{V}=O(\abs{E}^{1.5})$(below)}
-% 	\end{subfigure}~
-% 	\begin{subfigure}{0.4\textwidth}
-% 		\includegraphics[width=\textwidth]{pic/time_complexity_gaussian.eps}
-% 	\end{subfigure}
-% \end{figure} 
-% \begin{figure}
-% 	\centering
-% \vskip -1.0em
-% 	\begin{subfigure}{0.4\textwidth}
-% 		\includegraphics[width=\textwidth]{pic/two_level_new.eps}		
-% 	\end{subfigure}~
-% 	\begin{subfigure}{0.4\textwidth}
-% 		\includegraphics[width=\textwidth]{pic/time_complexity_two_level.eps}
-% 	\end{subfigure}
-% \end{figure} 
-% \end{frame}
-% %\section{Experimental Results}
-% \begin{frame}
-% 	\frametitle{Experimental Results}
-% \begin{table}
-% \centering
-% \begin{tabular}{ccccc}
-% \hline
-%               &  GaussianBlob   &      Moon       &  Lymphography  &     Glass     \\
-% \hline
-%    Type    & artificial & artificial & real-world & real-world \\
-%    N(Inliers) & 255  & 300 & 142  & 207 \\
-%    N(outliers)   & 45 &  45  & 6 & 7 \\
-%    N(features)   & 2 &  2  & 19 & 7  \\
-% \hline
-% \end{tabular}
-% \end{table}
-% \begin{itemize}
-% \item True Positive Rate (TPR)  $=\frac{N(\textrm{detected inliers})}{N(\textrm{inliners})} \geq 90\% $
-% \item True Negative Rate (TNR) $=\frac{N(\textrm{detected outliers})}{N(\textrm{outliers})}$
-% \end{itemize}
-% \begin{table}
-% \centering
-% {\scriptsize
-% \input{id_compare.tex}
-% }
-% \end{table}
-
-% \end{frame}	
-% \section{Conclusion}
-% \begin{frame}
-% \frametitle{Conclusion}
-% \begin{itemize}
-% \item Formulate Info-Detection method
-% \item Propose improved principal sequence of partition algorithm 
-% \item Demonstrate Info-Detection performs well on some datasets
-% \end{itemize}
-% \end{frame}
-% %\section*{Reference}
-% \begin{frame}
-% \frametitle{Reference}
-% \setbeamertemplate{bibliography item}[triangle]
-% \bibliographystyle{plainnat}
-% {\footnotesize
-% \bibliography{id}
-% }
-% \end{frame}
+\begin{frame}
+\frametitle{Formulation and Algorithm}
+Formulation of Info-Clustering for Weighted Graphs
+\begin{enumerate}
+\item graph $G(V, E)$
+\item mutual information of two nodes: edge weight $w_{ij}$
+\item multivariate mutual information (MMI) of a node set $C$
+\item the set $C$ with largest MMI other than $V$ is not outliers
+\end{enumerate}
+\begin{figure}
+	\includegraphics[width=0.9\textwidth]{alg_illustration.eps}
+	\caption{Hierarchical partition algorithm find outliers}
+\end{figure}
+\end{frame}
 
 
-% \subsection{Ising Model}
-% \begin{frame}
-% \frametitle{Ising model}
-% 	\begin{columns}
-% 		\column{5cm}
-% 		\begin{figure}
-% 			\includegraphics[width=3cm]{ernst_ising.jpeg}
-% 			\caption{Ernst Ising, German physicist}
-% 		\end{figure}
-% 		\column{5cm}
-% 	In statistical physics, Ising model refers to the magnetic spins that can be in one of two states (+1 or -1).
+ \begin{frame}{Experiments and Publications}
+ \begin{figure}
+ 	\centering
+ 	\includegraphics[width=\textwidth]{pic/outlier_boundary_illustration.eps}
+ 	\caption{Graph is constructed by Gaussian Kernel} \label{fig:boundary}
+ \end{figure}
+
+\normalsize Zhao, F., Ma, F., Li, Y., Huang, S.-L., \& Zhang, L.
+ (2019, December).
+ Info-Detection: An Information-Theoretic Approach to Detect Outlier. In International Conference on Neural Information Processing (pp. 489-496). Springer, Cham.
+
+ \end{frame}
+
+
+
+
+\section[Ising Model]{Community Detection by Ising Model}
+\begin{frame}
+\frametitle{Ising model}
+	\begin{columns}
+		\column{5cm}
+		\begin{figure}
+			\includegraphics[width=3cm]{ernst_ising.jpeg}
+			\caption{Ernst Ising, German physicist}
+		\end{figure}
+		\column{5cm}
+	In statistical physics, Ising model refers to the magnetic spins that can be in one of two states (+1 or -1).
 	
-% 	$T_c$: critical temperature.
+	$T_c$: critical temperature.
 	
-% 	\end{columns}
-% \begin{figure}
-% 	\centering
-% 	\begin{subfigure}{0.4\textwidth}
-% 		\includegraphics[width=0.7\textwidth]{Tlarge.pdf}
-% 		\caption{$T>T_c$, random spins}
-% 	\end{subfigure}~
-% 	\begin{subfigure}{0.4\textwidth}
-% 		\includegraphics[width=0.65\textwidth]{Tsmall.pdf}
-% 		\caption{$T<T_c$, spins align}
-% 	\end{subfigure}
-% \end{figure}
-% \end{frame}
+	\end{columns}
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\includegraphics[width=0.7\textwidth]{Tlarge.pdf}
+		\caption{$T>T_c$, random spins}
+	\end{subfigure}~
+	\begin{subfigure}{0.4\textwidth}
+		\includegraphics[width=0.65\textwidth]{Tsmall.pdf}
+		\caption{$T<T_c$, spins align}
+	\end{subfigure}
+\end{figure}
+\end{frame}
 
 % \begin{frame}
 % \frametitle{Canonical ensemble}
@@ -642,30 +497,30 @@ numberstyle=\tiny\color{mygray}
 % 		\caption{Connection between different parts}
 % 	\end{figure}
 % 	\end{frame}
-% \section{Problem Formulation}
-% \begin{frame}
-% \frametitle{Binary Symmetric SBM with Side Information}
-% \begin{block}{Characteristics of SBMSI}
-% \begin{itemize}
-% 	\item   Each node includes $m$ additional observations with
-% 	finite-cardinality alphabet.
-% 	\begin{equation*}
-% 		x_{i1}, x_{i2}, \dots, x_{im} \in \{1, 2, \dots, |\mathcal{X}|\}
-% 	\end{equation*}
-% 	\item The observations $X_i$ at $i$-th node are sampled from distribution $P_0$
-% 	or $P_1$ depending on the node label $Y_i$.
-% 	\begin{equation*}
-% 		X_{i1}, X_{i2}, \dots, X_{im} \textrm{ i.i.d. } \sim P_0 \textrm{ or } P_1
-% 	\end{equation*}
-% 	\item $X$ are conditionally independent of the random
-% 	graph $G$.
-% 	\begin{equation*}
-% 		P(G, X | Y) = P(G | Y) P(X | Y)
-% 	\end{equation*}
-% \end{itemize}
-% \end{block}
+\section[Side Information]{Community Detection with Side Information}
+\begin{frame}
+\frametitle{Binary Symmetric SBM with Side Information}
+\begin{block}{Characteristics of SBMSI}
+\begin{itemize}
+	\item   Each node includes $m$ additional observations with
+	finite-cardinality alphabet.
+	\begin{equation*}
+		x_{i1}, x_{i2}, \dots, x_{im} \in \{1, 2, \dots, |\mathcal{X}|\}
+	\end{equation*}
+	\item The observations $X_i$ at $i$-th node are sampled from distribution $P_0$
+	or $P_1$ depending on the node label $Y_i$.
+	\begin{equation*}
+		X_{i1}, X_{i2}, \dots, X_{im} \textrm{ i.i.d. } \sim P_0 \textrm{ or } P_1
+	\end{equation*}
+	\item $X$ are conditionally independent of the random
+	graph $G$.
+	\begin{equation*}
+		P(G, X | Y) = P(G | Y) P(X | Y)
+	\end{equation*}
+\end{itemize}
+\end{block}
 
-% \end{frame}
+\end{frame}
 % \begin{frame}\frametitle{Exact Recovery Error Rate}
 % \begin{block}{Maximum Likelihood}
 % \begin{itemize}
@@ -731,15 +586,16 @@ numberstyle=\tiny\color{mygray}
 % detection task.
 % \end{itemize}
 % \end{frame}
-\section{Other works}
+\section{Other Works}
+\subsection{Universally Good Activation Function}
 \begin{frame}
 	\frametitle{\small On the Universally Good Activation Function for One Node Neural Network}
 	\begin{columns}
-	\column{5cm}
+	\column{0.5\textwidth}
 	\begin{figure}
 	\includegraphics[width=\textwidth]{./network_structure.eps}
 	\end{figure}
-	\column{5cm}
+	\column{0.5\textwidth}
 	\begin{itemize}
 		\item $X,Y$ are independent
 		\item  $\epsilon$ is small
@@ -756,14 +612,30 @@ numberstyle=\tiny\color{mygray}
 		$$
 		\end{theorem}
 \end{frame}
+\subsection{Temporal Cooperation Efficiency in Wireless Networks}
 \begin{frame}{\large On the Temporal Cooperation Efficiency in Wireless Networks}
-	\begin{figure}
-		\centering
-	  \def\svgwidth{7cm}
-	  \input{geometric_interpretation_v2.eps_tex}
-	  \caption{One agent locating itself with information from anchors and previous time steps}
-	  \label{f1}
-	  \end{figure}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\def\svgwidth{\textwidth}
+			\input{geometric_interpretation_v2.eps_tex}
+			\caption{One agent locating itself with information from anchors and previous time steps}
+			\label{f1}
+		\end{figure}
+		\column{0.5\textwidth}
+		\begin{itemize}
+			\item Unbiased position estimator $\hat{\bm{P}}$
+			\item Study the lower bound of localization error by Cramér-Rao
+			\item The lower bound decays exponentially
+			with the number of previous positions $N$ used
+		\end{itemize}
+		$$
+		\min_{\hat{\bm{P}}} \mathbb{E}[|| \hat{\bm{P}} - \bm{P} ||^2]
+		\leq \frac{1}{\lambda^{N}}
+		$$
+	\hspace{0.8cm}	for some $\lambda > 1$.
+	\end{columns}
+
 \end{frame}
 
 \begin{frame}
