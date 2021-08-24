@@ -122,7 +122,7 @@ numberstyle=\tiny\color{mygray}
 		Empirical Study
 		\begin{itemize}
 			\item Better accuracy
-			\item lower time complexity
+			\item Lower time complexity
 		\end{itemize}
 		\column{0.5\textwidth}
 		Theoretical Model
@@ -208,7 +208,7 @@ numberstyle=\tiny\color{mygray}
 % \subsection{Info-Clustering}
 \begin{frame}
 \frametitle{Formulation and Algorithm}
-Formulation of Info-Clustering for Weighted Graphs
+Formulation of Info-Clustering for weighted graphs
 \begin{enumerate}
 \item graph $G(V, E)$
 \item mutual information of two nodes: edge weight $w_{ij}$
@@ -456,7 +456,7 @@ Formulation of Info-Clustering for Weighted Graphs
  	\begin{equation*}
  	P_{\sigma | G} = \frac{1}{Z} \exp(-\beta H(\bar{\sigma}))
  	\end{equation*}
-	 \item The studied property: $P_e= \displaystyle\min_{\hat{X}} P(\hat{X} \neq X)$
+	 \item The studied property: $P_e= P(\sigma \neq X)$
 	 \item $\beta > \beta^*$, $P_e \to 0$, there exists algorithms to achieve exact recovery;
 	\item $\beta < \beta^*$, $P_e \to 1$, no algorithm can achieve exact recovery
 \end{itemize}
@@ -504,7 +504,7 @@ Formulation of Info-Clustering for Weighted Graphs
 	
 	\begin{frame}
 	\frametitle{Simulation results and publication}
-	Metropolis algorithm is used to approximate $\hat{X}^*$
+	Metropolis algorithm is used to generate $\sigma$
 	
 % add \href{run:./OrbiteEul.mp4}{OrbiteEul.mp4} to invoke the
 % local mp4 file
@@ -551,7 +551,7 @@ Formulation of Info-Clustering for Weighted Graphs
 	\end{figure}
 	\column{0.5\textwidth}
 	Incorporating side information in graph model
-	can improve the performance of Community Detection
+	can improve the performance of community detection
 	\begin{block}{Objective}
 		Investigate quantitatively how side information influences
 		the detection error rate for SBM
@@ -572,7 +572,7 @@ Formulation of Info-Clustering for Weighted Graphs
 \begin{block}{Characteristics}
 \begin{itemize}
 	\item   Each node includes $m$ additional observations with
-	finite-cardinality alphabet.
+	finite-cardinality alphabet $\mathcal{X}$.
 	%\begin{equation*}
 %		x_{i1}, x_{i2}, \dots, x_{im} \in \{1, 2, \dots, |\mathcal{X}|\}
 %	\end{equation*}
@@ -607,12 +607,13 @@ Rényi divergence with order $\frac{1}{2}$:
 % \section{Main Results}
 \begin{frame}{Optimal Error Rate for SBM with Side Information}
 \begin{enumerate}
-	\item Dense Case: $\gamma=\frac{m}{n}, p, q$ are constants
-		\begin{equation*}
-		-\lim_{n\to \infty} \frac{1}{n}\log P_e =  \gamma D_{1/2}(p_0 || p_1) + D_{1/2}(\Bern(p)||\Bern(q))
-		\end{equation*}
-	\item Sparse Case: $\gamma=\frac{m}{ \log n},
-	a=\frac{np}{\log n}, b=\frac{nq}{\log n}$ are constants
+%	\item Dense Case: $\gamma=\frac{m}{n}, p, q$ are constants
+%		\begin{equation*}
+%		-\lim_{n\to \infty} \frac{1}{n}\log P_e =  \gamma D_{1/2}(p_0 || p_1) + D_{1/2}(\Bern(p)||\Bern(q))
+%		\end{equation*}
+	\item To balance side information with graph information:  $ m = O(\log n)$
+	\item $\gamma=\frac{m}{ \log n},
+	p=\frac{a \log n}{n}, q=\frac{b \log n}{n}$ are constants
 		\begin{equation*}\label{eq:PeMainL}
 		-\lim_{n\to \infty}\frac{\log P_e}{\log n}=\gamma D_{1/2}(p_0||p_1) + (\sqrt{a} - \sqrt{b})^2-2
 		\end{equation*}
